@@ -2,6 +2,12 @@
 
 Thin wrapper to execute git commands in Go.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/thombashi/go-gitexec.svg)](https://pkg.go.dev/github.com/thombashi/go-gitexec)
+[![Go Report Card](https://goreportcard.com/badge/github.com/thombashi/go-gitexec)](https://goreportcard.com/report/github.com/thombashi/go-gitexec)
+[![CI](https://github.com/thombashi/go-gitexec/actions/workflows/ci.yaml/badge.svg)](https://github.com/thombashi/go-gitexec/actions/workflows/ci.yaml)
+[![CodeQL](https://github.com/thombashi/go-gitexec/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/thombashi/go-gitexec/actions/workflows/github-code-scanning/codeql)
+
+
 ## Usage
 
 ### Basic Usage
