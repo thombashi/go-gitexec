@@ -1,6 +1,7 @@
 package gitexec
 
 import (
+	"context"
 	"strings"
 	"testing"
 
@@ -17,6 +18,27 @@ func TestRunGit(t *testing.T) {
 
 	// Test case 1: RunGit with valid arguments
 	result, err := executor.RunGit("status")
+	r.NoError(err)
+	a.NotNil(result)
+	a.Equal(0, result.ExitCode)
+	a.NotEmpty(result.Stdout.String())
+	a.Empty(result.Stderr.String())
+
+	// Test case 2: RunGit with invalid arguments
+	_, err = executor.RunGit("invalid-command")
+	a.Error(err)
+}
+
+func TestRunGitContext(t *testing.T) {
+	a := assert.New(t)
+	r := require.New(t)
+	ctx := context.Background()
+
+	executor, err := New(&Params{})
+	r.NoError(err)
+
+	// Test case 1: RunGit with valid arguments
+	result, err := executor.RunGitContext(ctx, "status")
 	r.NoError(err)
 	a.NotNil(result)
 	a.Equal(0, result.ExitCode)

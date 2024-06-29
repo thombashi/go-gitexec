@@ -2,6 +2,7 @@ package gitexec
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -15,6 +16,9 @@ import (
 type GitExecutor interface {
 	// RunGit executes a Git command with the specified arguments.
 	RunGit(args ...string) (*CmdResult, error)
+
+	// RunGitContext executes a Git command with the specified context and arguments.
+	RunGitContext(ctx context.Context, args ...string) (*CmdResult, error)
 
 	// WithLogger sets the logger to use for logging.
 	WithLogger(logger *slog.Logger) GitExecutor
@@ -80,12 +84,17 @@ func New(params *Params) (GitExecutor, error) {
 
 // RunGit executes a Git command with the specified arguments.
 func (e gitExecutorImpl) RunGit(args ...string) (*CmdResult, error) {
+	return e.RunGitContext(context.Background(), args...)
+}
+
+// RunGitContext executes a Git command with the specified context and arguments.
+func (e gitExecutorImpl) RunGitContext(ctx context.Context, args ...string) (*CmdResult, error) {
 	if e.logger != nil {
 		e.logger.Debug("execute", slog.String("command", fmt.Sprintf("git %s", strings.Join(args, " "))))
 	}
 
 	var stdout, stderr bytes.Buffer
-	gitCmd := exec.Command(e.gitPath, args...)
+	gitCmd := exec.CommandContext(ctx, e.gitPath, args...)
 	gitCmd.Stdout = &stdout
 	gitCmd.Stderr = &stderr
 	gitCmd.Env = e.env
