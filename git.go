@@ -59,8 +59,6 @@ type Params struct {
 	// As a special case on Windows, SYSTEMROOT is always added if
 	// missing and not explicitly set to the empty string.
 	Env []string
-
-	// Dir string
 }
 
 // New creates a new GitExecutor instance.
