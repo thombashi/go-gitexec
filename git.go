@@ -22,6 +22,9 @@ type GitExecutor interface {
 
 	// WithLogger sets the logger to use for logging.
 	WithLogger(logger *slog.Logger) GitExecutor
+
+	// GetLogger returns the logger instance.
+	GetLogger() *slog.Logger
 }
 
 type gitExecutorImpl struct {
@@ -118,4 +121,9 @@ func (e gitExecutorImpl) RunGitContext(ctx context.Context, args ...string) (*Cm
 func (e gitExecutorImpl) WithLogger(logger *slog.Logger) GitExecutor {
 	e.logger = logger
 	return e
+}
+
+// GetLogger returns the logger instance.
+func (e gitExecutorImpl) GetLogger() *slog.Logger {
+	return e.logger
 }
